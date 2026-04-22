@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\Tickets\Tables;
 
+use App\Models\Ticket;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\IconColumn;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -17,79 +19,70 @@ class TicketsTable
         return $table
             ->columns([
                 TextColumn::make('reference_number')
-                    ->searchable(),
-                TextColumn::make('permanent_address')
-                    ->searchable(),
-                TextColumn::make('country_of_residence')
-                    ->searchable(),
-                TextColumn::make('city')
-                    ->searchable(),
-                TextColumn::make('state')
-                    ->searchable(),
-                TextColumn::make('postal_code')
-                    ->searchable(),
-                TextColumn::make('travel_type')
-                    ->searchable(),
-                TextColumn::make('first_name')
-                    ->searchable(),
-                TextColumn::make('last_name')
-                    ->searchable(),
-                TextColumn::make('date_of_birth')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('gender')
-                    ->searchable(),
-                TextColumn::make('place_of_birth')
-                    ->searchable(),
-                TextColumn::make('passport_number')
-                    ->searchable(),
-                TextColumn::make('civil_status')
-                    ->searchable(),
-                TextColumn::make('occupation')
-                    ->searchable(),
-                TextColumn::make('email')
-                    ->label('Email address')
-                    ->searchable(),
-                TextColumn::make('phone_number')
-                    ->searchable(),
-                TextColumn::make('embarkation_port')
-                    ->searchable(),
-                TextColumn::make('disembarkation_port')
-                    ->searchable(),
-                TextColumn::make('airline_name')
-                    ->searchable(),
-                TextColumn::make('flight_date')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('flight_number')
-                    ->searchable(),
-                IconColumn::make('have_currency')
-                    ->boolean(),
-                IconColumn::make('have_animals')
-                    ->boolean(),
-                IconColumn::make('have_goods')
-                    ->boolean(),
-                TextColumn::make('status')
-                    ->searchable(),
-                TextColumn::make('stripe_payment_intent_id')
-                    ->searchable(),
-                TextColumn::make('pdf_path')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Reference')
+                    ->searchable()
                     ->sortable()
+                    ->weight('bold'),
+
+                TextColumn::make('first_name')
+                    ->label('Passenger')
+                    ->formatStateUsing(fn (string $state, Ticket $record): string => $state.' '.$record->last_name)
+                    ->searchable(['first_name', 'last_name']),
+
+                TextColumn::make('travel_type')
+                    ->label('Direction')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'arrival' => 'success',
+                        'departure' => 'info',
+                        default => 'gray',
+                    }),
+
+                TextColumn::make('airline_name')
+                    ->label('Airline')
+                    ->searchable(),
+
+                TextColumn::make('flight_number')
+                    ->label('Flight')
+                    ->searchable(),
+
+                TextColumn::make('flight_date')
+                    ->label('Flight Date')
+                    ->date()
+                    ->sortable(),
+
+                TextColumn::make('email')
+                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
+
+                TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'paid' => 'success',
+                        'completed' => 'info',
+                        'pending' => 'warning',
+                        default => 'gray',
+                    }),
+
+                TextColumn::make('created_at')
+                    ->label('Submitted')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                Action::make('receipt')
+                    ->label('Receipt')
+                    ->icon(Heroicon::OutlinedReceiptRefund)
+                    ->url(fn (Ticket $record): string => route('stripe.receipt', $record))
+                    ->openUrlInNewTab()
+                    ->visible(fn (Ticket $record): bool => filled($record->stripe_payment_intent_id)),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

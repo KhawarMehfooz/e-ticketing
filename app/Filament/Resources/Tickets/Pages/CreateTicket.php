@@ -3,8 +3,10 @@
 namespace App\Filament\Resources\Tickets\Pages;
 
 use App\Filament\Resources\Tickets\TicketResource;
+use App\Models\Ticket;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\Str;
 use Laravel\Cashier\Cashier;
 
 class CreateTicket extends CreateRecord
@@ -37,8 +39,18 @@ class CreateTicket extends CreateRecord
             $this->halt();
         }
 
+        $data['reference_number'] = $this->generateUniqueReferenceNumber();
         $data['status'] = 'paid';
 
         return $data;
+    }
+
+    private function generateUniqueReferenceNumber(): string
+    {
+        do {
+            $reference = 'TKT-'.strtoupper(Str::random(8));
+        } while (Ticket::where('reference_number', $reference)->exists());
+
+        return $reference;
     }
 }

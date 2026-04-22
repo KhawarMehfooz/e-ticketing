@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Tickets\Schemas;
 use CodeWithDennis\FilamentAdvancedChoice\Filament\Forms\Components\RadioCards;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
@@ -25,12 +26,6 @@ class TicketForm
                         ->icon(Heroicon::InformationCircle)
                         ->description('Reference number, address and travel type')
                         ->schema([
-                            TextInput::make('reference_number')
-                                ->label('Reference Number')
-                                ->prefixIcon(Heroicon::DocumentText)
-                                ->required()
-                                ->columnSpanFull(),
-
                             Section::make('Address')
                                 ->description('Your current residential address')
                                 ->icon(Heroicon::Home)
@@ -42,9 +37,134 @@ class TicketForm
                                         ->required()
                                         ->columnSpanFull(),
 
-                                    TextInput::make('country_of_residence')
+                                    Select::make('country_of_residence')
                                         ->label('Country of Residence')
                                         ->prefixIcon(Heroicon::GlobeAlt)
+                                        ->searchable()
+                                        ->options([
+                                            'afghanistan' => 'Afghanistan',
+                                            'albania' => 'Albania',
+                                            'algeria' => 'Algeria',
+                                            'andorra' => 'Andorra',
+                                            'angola' => 'Angola',
+                                            'argentina' => 'Argentina',
+                                            'armenia' => 'Armenia',
+                                            'australia' => 'Australia',
+                                            'austria' => 'Austria',
+                                            'azerbaijan' => 'Azerbaijan',
+                                            'bahrain' => 'Bahrain',
+                                            'bangladesh' => 'Bangladesh',
+                                            'belarus' => 'Belarus',
+                                            'belgium' => 'Belgium',
+                                            'belize' => 'Belize',
+                                            'bolivia' => 'Bolivia',
+                                            'bosnia_and_herzegovina' => 'Bosnia and Herzegovina',
+                                            'brazil' => 'Brazil',
+                                            'brunei' => 'Brunei',
+                                            'bulgaria' => 'Bulgaria',
+                                            'cambodia' => 'Cambodia',
+                                            'cameroon' => 'Cameroon',
+                                            'canada' => 'Canada',
+                                            'chile' => 'Chile',
+                                            'china' => 'China',
+                                            'colombia' => 'Colombia',
+                                            'croatia' => 'Croatia',
+                                            'cuba' => 'Cuba',
+                                            'cyprus' => 'Cyprus',
+                                            'czech_republic' => 'Czech Republic',
+                                            'denmark' => 'Denmark',
+                                            'ecuador' => 'Ecuador',
+                                            'egypt' => 'Egypt',
+                                            'ethiopia' => 'Ethiopia',
+                                            'finland' => 'Finland',
+                                            'france' => 'France',
+                                            'georgia' => 'Georgia',
+                                            'germany' => 'Germany',
+                                            'ghana' => 'Ghana',
+                                            'greece' => 'Greece',
+                                            'hong_kong' => 'Hong Kong',
+                                            'hungary' => 'Hungary',
+                                            'iceland' => 'Iceland',
+                                            'india' => 'India',
+                                            'indonesia' => 'Indonesia',
+                                            'iran' => 'Iran',
+                                            'iraq' => 'Iraq',
+                                            'ireland' => 'Ireland',
+                                            'israel' => 'Israel',
+                                            'italy' => 'Italy',
+                                            'jamaica' => 'Jamaica',
+                                            'japan' => 'Japan',
+                                            'jordan' => 'Jordan',
+                                            'kazakhstan' => 'Kazakhstan',
+                                            'kenya' => 'Kenya',
+                                            'kuwait' => 'Kuwait',
+                                            'kyrgyzstan' => 'Kyrgyzstan',
+                                            'laos' => 'Laos',
+                                            'latvia' => 'Latvia',
+                                            'lebanon' => 'Lebanon',
+                                            'libya' => 'Libya',
+                                            'liechtenstein' => 'Liechtenstein',
+                                            'lithuania' => 'Lithuania',
+                                            'luxembourg' => 'Luxembourg',
+                                            'macau' => 'Macau',
+                                            'malaysia' => 'Malaysia',
+                                            'maldives' => 'Maldives',
+                                            'malta' => 'Malta',
+                                            'mauritius' => 'Mauritius',
+                                            'mexico' => 'Mexico',
+                                            'moldova' => 'Moldova',
+                                            'monaco' => 'Monaco',
+                                            'mongolia' => 'Mongolia',
+                                            'morocco' => 'Morocco',
+                                            'myanmar' => 'Myanmar',
+                                            'nepal' => 'Nepal',
+                                            'netherlands' => 'Netherlands',
+                                            'new_zealand' => 'New Zealand',
+                                            'nigeria' => 'Nigeria',
+                                            'north_korea' => 'North Korea',
+                                            'norway' => 'Norway',
+                                            'oman' => 'Oman',
+                                            'pakistan' => 'Pakistan',
+                                            'palestine' => 'Palestine',
+                                            'panama' => 'Panama',
+                                            'peru' => 'Peru',
+                                            'philippines' => 'Philippines',
+                                            'poland' => 'Poland',
+                                            'portugal' => 'Portugal',
+                                            'qatar' => 'Qatar',
+                                            'romania' => 'Romania',
+                                            'russia' => 'Russia',
+                                            'saudi_arabia' => 'Saudi Arabia',
+                                            'serbia' => 'Serbia',
+                                            'singapore' => 'Singapore',
+                                            'slovakia' => 'Slovakia',
+                                            'slovenia' => 'Slovenia',
+                                            'somalia' => 'Somalia',
+                                            'south_africa' => 'South Africa',
+                                            'south_korea' => 'South Korea',
+                                            'spain' => 'Spain',
+                                            'sri_lanka' => 'Sri Lanka',
+                                            'sweden' => 'Sweden',
+                                            'switzerland' => 'Switzerland',
+                                            'syria' => 'Syria',
+                                            'taiwan' => 'Taiwan',
+                                            'tajikistan' => 'Tajikistan',
+                                            'tanzania' => 'Tanzania',
+                                            'thailand' => 'Thailand',
+                                            'tunisia' => 'Tunisia',
+                                            'turkey' => 'Turkey',
+                                            'turkmenistan' => 'Turkmenistan',
+                                            'ukraine' => 'Ukraine',
+                                            'united_arab_emirates' => 'United Arab Emirates',
+                                            'united_kingdom' => 'United Kingdom',
+                                            'united_states' => 'United States',
+                                            'uruguay' => 'Uruguay',
+                                            'uzbekistan' => 'Uzbekistan',
+                                            'venezuela' => 'Venezuela',
+                                            'vietnam' => 'Vietnam',
+                                            'yemen' => 'Yemen',
+                                            'zimbabwe' => 'Zimbabwe',
+                                        ])
                                         ->required(),
 
                                     TextInput::make('city')
@@ -52,8 +172,7 @@ class TicketForm
                                         ->required(),
 
                                     TextInput::make('state')
-                                        ->prefixIcon(Heroicon::Map)
-                                        ->required(),
+                                        ->prefixIcon(Heroicon::Map),
 
                                     TextInput::make('postal_code')
                                         ->label('Postal Code')
@@ -94,10 +213,17 @@ class TicketForm
                                     DatePicker::make('date_of_birth')
                                         ->label('Date of Birth')
                                         ->prefixIcon(Heroicon::Calendar)
+                                        ->native(false)
+                                        ->maxDate(now())
+                                        ->minDate(now()->subYears(120))
                                         ->required(),
 
-                                    TextInput::make('gender')
-                                        ->prefixIcon(Heroicon::UserGroup)
+                                    Select::make('gender')
+                                        ->prefixIcon(Heroicon::UserCircle)
+                                        ->options([
+                                            'male' => 'Male',
+                                            'female' => 'Female',
+                                        ])
                                         ->required(),
 
                                     TextInput::make('place_of_birth')
@@ -108,15 +234,31 @@ class TicketForm
                                     TextInput::make('passport_number')
                                         ->label('Passport Number')
                                         ->prefixIcon(Heroicon::Identification)
+                                        ->alphaNum()
                                         ->required(),
 
-                                    TextInput::make('civil_status')
+                                    Select::make('civil_status')
                                         ->label('Civil Status')
                                         ->prefixIcon(Heroicon::Heart)
+                                        ->options([
+                                            'single' => 'Single',
+                                            'married' => 'Married',
+                                            'divorced' => 'Divorced',
+                                            'widowed' => 'Widowed',
+                                        ])
                                         ->required(),
 
-                                    TextInput::make('occupation')
+                                    Select::make('occupation')
                                         ->prefixIcon(Heroicon::Briefcase)
+                                        ->options([
+                                            'employed' => 'Employed',
+                                            'self_employed' => 'Self-Employed',
+                                            'student' => 'Student',
+                                            'retired' => 'Retired',
+                                            'unemployed' => 'Unemployed',
+                                            'freelancer' => 'Freelancer',
+                                            'other' => 'Other',
+                                        ])
                                         ->required(),
                                 ]),
 
@@ -166,6 +308,8 @@ class TicketForm
                                     DatePicker::make('flight_date')
                                         ->label('Flight Date')
                                         ->prefixIcon(Heroicon::CalendarDays)
+                                        ->native(false)
+                                        ->minDate(today())
                                         ->required()
                                         ->columnSpanFull(),
                                 ]),
@@ -180,16 +324,13 @@ class TicketForm
                                 ->icon(Heroicon::ShoppingBag)
                                 ->schema([
                                     Toggle::make('have_currency')
-                                        ->label('Are you carrying currency above the permitted limit?')
-                                        ->required(),
+                                        ->label('Are you carrying currency above the permitted limit?'),
 
                                     Toggle::make('have_animals')
-                                        ->label('Are you carrying any animals or animal products?')
-                                        ->required(),
+                                        ->label('Are you carrying any animals or animal products?'),
 
                                     Toggle::make('have_goods')
-                                        ->label('Are you carrying goods for commercial use?')
-                                        ->required(),
+                                        ->label('Are you carrying goods for commercial use?'),
                                 ]),
                         ])->columnSpanFull(),
 
