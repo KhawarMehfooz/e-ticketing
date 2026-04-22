@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Tickets\Schemas;
 
 use CodeWithDennis\FilamentAdvancedChoice\Filament\Forms\Components\RadioCards;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
@@ -197,6 +198,7 @@ class TicketForm
                         ->description('Complete your payment to submit')
                         ->schema([
                             View::make('filament.schemas.components.stripe-payment'),
+                            Hidden::make('stripe_payment_intent_id'),
                         ])->columnSpanFull(),
                 ])->columnSpanFull()->skippable(),
             ]);
