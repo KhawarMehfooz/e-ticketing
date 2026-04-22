@@ -87,7 +87,7 @@
             }
         },
     }"
-    class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/5"
+    class="rounded-xl max-w-2xl mx-auto border border-gray-200 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/5"
 >
     {{-- Header --}}
     <div class="mb-5 flex items-center gap-3">
@@ -141,7 +141,7 @@
             type="button"
             @click="pay()"
             :disabled="processing"
-            class="flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-indigo-500 dark:hover:bg-indigo-400"
+            class="fi-color fi-color-primary fi-bg-color-400 hover:fi-bg-color-300 dark:fi-bg-color-600 dark:hover:fi-bg-color-500 fi-text-color-900 hover:fi-text-color-800 dark:fi-text-color-950 dark:hover:fi-text-color-950 fi-btn fi-size-md"
         >
             <svg x-show="processing" class="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
