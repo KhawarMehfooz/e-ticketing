@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Tickets\Pages;
 
 use App\Filament\Resources\Tickets\TicketResource;
+use App\Jobs\ProcessTicket;
 use App\Models\Ticket;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
@@ -43,6 +44,11 @@ class CreateTicket extends CreateRecord
         $data['status'] = 'paid';
 
         return $data;
+    }
+
+    protected function afterCreate(): void
+    {
+        ProcessTicket::dispatch($this->record);
     }
 
     private function generateUniqueReferenceNumber(): string
